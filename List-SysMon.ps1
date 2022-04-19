@@ -1,6 +1,7 @@
 ﻿param(
     $Minutes = 10,
     [switch]$User,
+    [switch]$System,
     [switch]$Bypass
 )
 
@@ -47,6 +48,8 @@ if ($Events) {
 
     if ($User) {
         $Evts = $Evts | ? {$_.User -notlike "NT AUTHORITY*"}
+    } elseif ($System) {
+        $Evts = $Evts | ? {$_.User -like "NT AUTHORITY*"}
     } elseif ($Bypass) {
         $Evts = $Evts | ? {$_.User -notlike "NT AUTHORITY*"}
         $FEvts = @()
